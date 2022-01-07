@@ -63,7 +63,8 @@ server.post("/api/auth/register", (req, res) => {
 });
 
 server.post("/api/auth/verify-email", (req, res) => {
-    const {emailCode} = req.body;
+    console.log(req.body,"body");
+    const emailCode = req.body;
     if(!emailCode){
         const status = 401;
         const message = "Wrong verification code";
