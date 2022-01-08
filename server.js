@@ -25,6 +25,14 @@ function isAuthenticated({email,password}){
     );
 }
 
+function verifyEmail(email){
+    return (
+        db.users.findIndex(
+            (user) => user.email === email
+        ) !== -1 
+    );
+}
+
 
 server.post("/api/auth/register", (req, res) => {
     const {fullname,email, password} = req.body;
@@ -63,7 +71,6 @@ server.post("/api/auth/register", (req, res) => {
 });
 
 server.post("/api/auth/verify-email", (req, res) => {
-    console.log(req.body,"body");
     const emailCode = req.body;
     if(!emailCode){
         const status = 401;
@@ -92,6 +99,20 @@ server.post("/api/auth/login", (req, res) => {
     res.status(200).json({
         name: userName,
         token:access_token
+    });
+});
+
+server.post("/api/auth/forgotpassord", (req, res) => {
+    console.log(req.body,'body')
+    const {email} = req.body;
+    if(!verifyEmail(email)){
+        const status = 401;
+        const message = "Email is not registered";
+        res.status(status).json({status, message})
+        return;
+    }
+    res.status(200).json({
+        success: true,
     });
 });
 
