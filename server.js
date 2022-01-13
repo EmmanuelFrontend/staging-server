@@ -9,7 +9,7 @@ dotenv.config();
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const server = jsonServer.create();
-const db = JSON.parse(fs.readFileSync("./db.json", "utf-8"));
+const db = JSON.parse(fs.readFileSync("./dbs.json", "utf-8"));
 
 server.use(bodyParser.urlencoded({extended: true}));
 server.use(bodyParser.json());
